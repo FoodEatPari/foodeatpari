@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text,TouchableOpacity, Button, TextInput } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function Address({modalVisible,setModalVisible,address}) {
     console.log(address)
@@ -12,7 +13,7 @@ export default function Address({modalVisible,setModalVisible,address}) {
             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             <Text style={{fontSize:20,margin:10}}>Select a Location</Text>
             <TouchableOpacity onPress={()=>setModalVisible(!modalVisible)}>
-            <Text>X</Text>
+            <AntDesign name="closecircleo" size={24} color="orange" />
             </TouchableOpacity>
          
             </View>

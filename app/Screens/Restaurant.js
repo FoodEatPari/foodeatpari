@@ -2,28 +2,61 @@ import React from 'react'
 import { View, Text,ScrollView,Image, TouchableOpacity,Switch } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import Itemcard from '../Components/Itemcard';
+import Itemcard from '../Components/SubComponents/Itemcard';
 import Category from '../Components/SubComponents/Category';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import instance from '../Config/Axios';
+import Additem from '../Redux/Cart/CartActions'
+import { useSelector,useDispatch } from 'react-redux'
 
-export default function Restaurant({navigation}) {
+export default function Restaurant({route,navigation}) {
+  const cart = useSelector(state=>state.cart_store.cart)
+  const dispatch = useDispatch()
+    const {restaurantname,_id,rating} = route.params.restaurantdata
     const [isEnabled, setIsEnabled] = React.useState(false);
+    const [items,setitems]=React.useState([])
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
 
+  const  getitems =async(isMounted)=>{
+    if(isMounted){
+     instance.get(`/items/GetitembyRestaurent/${_id}`)
+     .then(function (response) {
+       // handle success
+       console.log(response.data);
+       setitems(response.data)
+     })
+     .catch(function (error) {
+       // handle error
+       console.log(error);
+     })
+    }
+   
+  }
+
+  React.useEffect(() => {
+    let isMounted = true
+    getitems(isMounted)
+    return (()=>{
+      isMounted = false
+      setitems([])
+    })
+  }, [])    
+  
+  
 
   React.useEffect(() => {
     navigation.setOptions({
         headerRight: () => (
         <View style={{flexDirection:'row',padding:10}}>
-         <TouchableOpacity style={{marginTop:10,marginRight:10}}  onPress={() => setModalVisible(true)} >
+         <TouchableOpacity style={{marginTop:10,marginRight:10}}  onPress={() =>navigation.navigate("Cart") } >
           <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
         
         
           <Ionicons name="cart" size={24} color="black" />
         <View style={{backgroundColor:'#E3735E',borderRadius:90,padding:5,marginLeft:-5,marginTop:-10}}>
-          <Text style={{color:'white',fontSize:10,fontWeight:'bold'}}>0</Text>
+          <Text style={{color:'white',fontSize:10,fontWeight:'bold'}}>{cart.length}</Text>
           </View>
         </View>
            </TouchableOpacity>
@@ -32,7 +65,7 @@ export default function Restaurant({navigation}) {
       return () => {
           
       }
-  }, [])
+  }, [cart])
     return (
         <ScrollView style={{flex:1,borderBottomRightRadius:0,borderBottomLeftRadius:0}}>
             <View style={{flex:1,backgroundColor:'#fff',borderBottomLeftRadius:1,borderBottomRightRadius:1}}>
@@ -40,11 +73,11 @@ export default function Restaurant({navigation}) {
             
                 <View style={{flexDirection:'row',padding:30,justifyContent:'space-between'}}>
                      <View style={{}}>
-                            <Text style={{fontSize:25,}}>JSP Restaurant</Text>
+                            <Text style={{fontSize:25,}}>{restaurantname}</Text>
                             <Text>Dilshuknagar,Hyderabad</Text>
                      </View>
                     <View style={{flexDirection:'row'}}>
-                         <Text style={{fontSize:25}}>5.0</Text>
+                         <Text style={{fontSize:20}}>{rating ==0? "No rating" : rating}</Text>
                         <AntDesign name="star" size={25} color="green" />
                     </View>
                </View>
@@ -121,11 +154,16 @@ export default function Restaurant({navigation}) {
                </View>
                <View style={{flex:1}}>
 
-<Category/>
-<Category/>
-<Category/>
 
+               {items.map((item,index)=>{
+              
+              return(
+               
 
+                 <Itemcard props={item} key={item._id.toString()}/>
+          
+        
+          )})}
 
 
 

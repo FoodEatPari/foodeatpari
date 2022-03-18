@@ -2,7 +2,9 @@ import React from 'react'
 import { View, Text,Image,TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 
-export default function CartItem() {
+export default function CartItem({props}) {
+    const {itemname,item_price} =props
+    console.log(props)
     return (
         <View style={{flexDirection:'row',justifyContent:'space-between',backgroundColor:'white',paddingBottom:20,paddingTop:5,}}>
         <View style={{flexDirection:'row',marginLeft:20,marginTop:10}}>
@@ -10,8 +12,8 @@ export default function CartItem() {
         <Image source={require('../../Assets/images/non.png')} style={{height:10,width:10,marginTop:2}}/>
         
         <View style={{flexDirection:'column'}}>
-        <Text style={{marginLeft:1,fontSize:10}}> Biryani Chicken Biryani Biryani Chicken</Text>
-        <Text style={{marginLeft:1,fontSize:10,fontWeight:'bold'}}> € 30</Text>
+        <Text style={{marginLeft:1,fontSize:10}}> {itemname}</Text>
+        <Text style={{marginLeft:1,fontSize:10,fontWeight:'bold'}}> € {item_price}</Text>
         </View>
         </View>
         <View style={{marginRight:20,marginTop:5}}>
@@ -24,6 +26,7 @@ export default function CartItem() {
        <AntDesign name="plus" size={15} color="#DAA520" />
        </TouchableOpacity>
        </View>
+       
 
         </View>
         

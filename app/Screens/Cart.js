@@ -1,9 +1,11 @@
 import React from 'react'
 import { View, Text,Image, Button,ScrollView, TouchableOpacity } from 'react-native'
-import Itemcard from '../Components/Itemcard'
-import CartItem from '../Components/SubComponents/CartItem'
 
+import CartItem from '../Components/SubComponents/CartItem'
+import { useSelector,useDispatch } from 'react-redux'
 export default function Cart() {
+    const cart = useSelector(state=>state.cart_store.cart)
+
     return (
         <ScrollView style={{flex:1}}>
             <View style={{flexDirection:'row',backgroundColor:'white',paddingTop:10,paddingBottom:10}}>
@@ -23,8 +25,17 @@ export default function Cart() {
     
 
 {/* Cart Items */}
-    <CartItem/>
-    <CartItem/>
+{cart.map((item,index)=>{
+              
+              return(
+               
+
+                 <CartItem props={item} key={item._id.toString()}/>
+          
+        
+          )})}
+   
+  
    
 
     {/*  */}

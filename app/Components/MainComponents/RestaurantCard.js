@@ -3,11 +3,14 @@ import { View, Text,Image, TouchableOpacity,TouchableHighlight,Pressable  } from
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
-export default function RestaurantCard() {
+import * as Location from 'expo-location';
+export default function RestaurantCard({props}) {
+ 
+  const {restaurantname,address2} = props
+  console.log(address2)
   const navigation = useNavigation();
     return (
-      <TouchableOpacity  onPress={()=>navigation.navigate('Restaurant')} activeOpacity={0.7}
+      <TouchableOpacity  onPress={()=>navigation.navigate('Restaurant',{restaurantdata:props})} activeOpacity={0.7}
       underlayColor="#DDDDDD"
     > 
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',backgroundColor:'#f7f7f3',padding:10,borderRadius:20,marginTop:10}} >
@@ -19,7 +22,7 @@ export default function RestaurantCard() {
          </View>
           <View style={{flex:1,justifyContent:'flex-start',marginLeft:40}}>
         <View style={{flex:1,justifyContent:'space-between'}}>
-        <Text style={{fontSize:15}}>JSP Restaurant</Text>
+        <Text style={{fontSize:15}}>{restaurantname}</Text>
         <Text   style={{fontSize:10,fontWeight:'bold'}}>Nagole</Text>
         <Text style={{fontSize:10,}}>Biryani, Tandoor, Chinese, Indian, Desserts, Kebabs, Mughlai</Text>
         

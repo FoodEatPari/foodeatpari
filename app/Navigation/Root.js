@@ -23,7 +23,7 @@ const HomeStack = createBottomTabNavigator();
 
 const UserScreen =()=>(
 
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Home1">
          <Stack.Screen name="Home1" component={HomeStackScreen} options={{headerShown:false}} />
            <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Orders" component={Orders} />

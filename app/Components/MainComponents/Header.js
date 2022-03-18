@@ -7,9 +7,11 @@ import { Entypo } from '@expo/vector-icons';
 import {width} from '../../Constants/Layout'
 import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector,useDispatch } from 'react-redux'
 
 export default function Header({modalVisible,setModalVisible,address}) {
   const navigation = useNavigation();
+  const cart = useSelector(state=>state.cart_store.cart)
 console.log(address)
   const _goBack = () => console.log('Went back');
 
@@ -28,7 +30,12 @@ console.log(address)
             <Text style={{color:"white",fontWeight:'bold',paddingLeft:5,fontSize:10}}>{address?address:""}</Text>
             </TouchableOpacity>
       </View>
-       <Appbar.Action icon="cart" color='white' onPress={()=>navigation.navigate('Cart')} />
+      <View style={{}}>
+      <Appbar.Action icon="cart" color='white' onPress={()=>navigation.navigate('Cart')} />
+      <Text style={{marginTop:-40,marginLeft:30,backgroundColor:"red",borderRadius:90,textAlign:'center',color:'white',}}>{cart.length}</Text>
+      </View>
+       
+       
      </View>
       
 

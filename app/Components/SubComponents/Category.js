@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text,TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import Itemcard from '../Itemcard';
+import Itemcard from './Itemcard';
 export default function Category() {
     const [active,Setactive]=React.useState(true)
     return (
